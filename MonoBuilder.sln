@@ -17,6 +17,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLib", "TestLib\TestLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApi", "TestApi\TestApi.csproj", "{DF1F46D7-65B5-4492-A8F9-4201D72D06A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		config.json = config.json
+		README.md = README.md
+		run.ps1 = run.ps1
+		send.bat = send.bat
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestedTestLib", "NestedTestLib\NestedTestLib.csproj", "{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +59,10 @@ Global
 		{DF1F46D7-65B5-4492-A8F9-4201D72D06A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF1F46D7-65B5-4492-A8F9-4201D72D06A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF1F46D7-65B5-4492-A8F9-4201D72D06A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +71,7 @@ Global
 		{28A5786A-2EA7-4ECB-B2AB-1BC6641ADB6F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D3DBC365-2CBF-4262-88DE-8194AFFE3059} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DF1F46D7-65B5-4492-A8F9-4201D72D06A5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{ECFAD8E5-1C48-4AB6-A4A2-4F5F5D6E3ADD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {21FA79F4-6CCE-4CA5-8A24-599C0073993D}

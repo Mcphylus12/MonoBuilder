@@ -1,20 +1,24 @@
 {
-    "Projects": [
-        {
-            "Name": "TestLib",
-            "Path": "TestLib"
-        },
-        {
-            "Name": "TestApi",
-            "Path": "TestApi",
-            "Dependencies": ["CSharpDiscoverer"],
-            "Exec": "test api output"
-        },
-        {
-            "Name": "TestConsole",
-            "Path": "TestConsole",
-            "Dependencies": ["CSharpDiscoverer"],
-            "Exec": "test console output"
-        }
-    ]
+  "Projects": [
+    {
+      "Name": "TestLib",
+      "Path": "TestLib"
+    },
+    {
+      "Name": "NestedTestLib",
+      "Path": "NestedTestLib"
+    },
+    {
+      "Name": "TestApi",
+      "Path": "TestApi",
+      "Dependencies": [ "CSharpDiscoverer" ],
+      "Exec": "test api output"
+    },
+    {
+      "Name": "TestConsole",
+      "Path": "TestConsole",
+      "Dependencies": [ "CSharpDiscoverer" ],
+      "Exec": "test console output"
+    }
+  ]
 }

@@ -28,7 +28,7 @@ public class CSharpDiscovererTests
                     {
                         Name = "TestApi",
                         Path = "../../../../TestApi",
-                        Dependencies = ["csprojDiscoverer"]
+                        Dependencies = ["CSharpDiscoverer"]
                     },
                     new Project()
                     {
@@ -38,10 +38,7 @@ public class CSharpDiscovererTests
                 ]
         };
 
-        var resolver = new ChangeResolver(config, new Dictionary<string, IDiscoverer>()
-        {
-            ["csprojDiscoverer"] = new CSharpDiscoverer()
-        });
+        var resolver = new ChangeResolver(config);
 
         List<string> input = ["../../../../TestLib/TestP/testfile.txt"];
 
