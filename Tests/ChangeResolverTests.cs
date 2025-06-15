@@ -74,10 +74,10 @@ public class ChangeResolverTests
 
         var resolver = new ChangeResolver(config);
 
-        List<string> input = ["SomeOther/Helo/testfile.txt"];
+        List<string> input = ["SomeProjectDir/TestP/testfile.txt"];
 
         var projects = resolver.GetChangedProjects(input);
 
-        Assert.Contains("TestP", projects.Select(p => p.Name));
+        Assert.Contains("2P", projects.Select(p => p.Name));
     }
 }
