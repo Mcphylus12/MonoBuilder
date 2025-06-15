@@ -1,0 +1,20 @@
+{
+    "Projects": [
+        {
+            "Name": "TestLib",
+            "Path": "TestLib"
+        },
+        {
+            "Name": "TestApi",
+            "Path": "TestApi",
+            "Dependencies": ["CSharpDiscoverer"],
+            "Exec": "test api output"
+        },
+        {
+            "Name": "TestConsole",
+            "Path": "TestConsole",
+            "Dependencies": ["CSharpDiscoverer"],
+            "Exec": "test console output"
+        }
+    ]
+}

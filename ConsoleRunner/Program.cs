@@ -1,6 +1,7 @@
 ﻿using MonoBuilder;
 using System.CommandLine;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var rootCommand = new RootCommand("Sample CLI app");
 
@@ -36,25 +37,38 @@ rootCommand.SetHandler((bool? readFromStandardIn, string? fileIn, string? config
         throw new NotSupportedException("need to pass a flag to say where input is from");
     }
 
-    var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(configFile));
+    var config = JsonSerializer.Deserialize<Config>(File.ReadAllText(configFile), SourceGenerationContext.Default.Config);
 
     if (!string.IsNullOrEmpty(fileIn))
     {
         var changes = File.ReadAllLines(fileIn);
 
-        var projects = new ChangeResolver(config).GetChangedProjects(changes);
-
-        Console.WriteLine(string.Join(Environment.NewLine, projects.Select(p => p.Name)));
+        GetExecs(config, changes);
     }
     else
     {
         var changes = Console.In.ReadToEnd().Split(Environment.NewLine);
 
-        var projects = new ChangeResolver(config).GetChangedProjects(changes);
-
-        Console.WriteLine(string.Join(Environment.NewLine, projects.Select(p => p.Name)));
+        GetExecs(config, changes);
     }
 },
 standardInOption, fileInOption, configOption);
 
 return await rootCommand.InvokeAsync(args);
+
+static void GetExecs(Config? config, string[] changes)
+{
+    var projects = new ChangeResolver(config, new Dictionary<string, IDiscoverer>
+    {
+        ["CSharpDiscoverer"] = new CSharpDiscoverer()
+    }).GetChangedProjects(changes.Select(s => s.Trim()));
+
+    var execs = projects.Select(p => p.Exec).Where(exec => !string.IsNullOrEmpty(exec));
+
+    Console.WriteLine(string.Join(Environment.NewLine, execs));
+}
+
+[JsonSerializable(typeof(Config))]
+public partial class SourceGenerationContext : JsonSerializerContext
+{
+}

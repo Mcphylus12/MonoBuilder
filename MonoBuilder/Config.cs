@@ -68,7 +68,7 @@ public class ChangeResolver
             int oldCount = result.Count;
 
             var copy = result.ToList();
-            foreach (var item in config.Values.SelectMany(p => p.Dependents))
+            foreach (var item in copy.SelectMany(p => p.Dependents))
             {
                 if (config.TryGetValue(item, out var newProj))
                 {
