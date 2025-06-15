@@ -1,14 +1,6 @@
 {
   "Projects": [
     {
-      "Name": "TestLib",
-      "Path": "TestLib"
-    },
-    {
-      "Name": "NestedTestLib",
-      "Path": "NestedTestLib"
-    },
-    {
       "Name": "TestApi",
       "Path": "TestApi",
       "Dependencies": [ "CSharpDiscoverer" ],

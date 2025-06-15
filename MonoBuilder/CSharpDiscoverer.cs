@@ -14,7 +14,15 @@ public class CSharpDiscoverer : IDiscoverer
             Console.WriteLine($"Project file not found when discovering {item.Name}");
             return [];
         }
+        var result = new List<string>();
 
+        GetReferences(project, dir, result);
+
+        return result.Distinct().ToArray();
+    }
+
+    private static void GetReferences(string project, DirectoryInfo dir, List<string> result)
+    {
         XDocument doc = XDocument.Load(project);
 
         var references = doc
@@ -23,8 +31,13 @@ public class CSharpDiscoverer : IDiscoverer
             .Select(x => x.Attribute("Include")?.Value)
             .Where(x => !string.IsNullOrEmpty(x))
             .Select(x => Path.GetFullPath(Path.Combine(dir.FullName, x!)))
-            .ToArray();
+            .ToList();
 
-        return references;
+        result.AddRange(references);
+
+        foreach (var reference in references)
+        {
+            GetReferences(reference, dir, result);
+        }
     }
 }

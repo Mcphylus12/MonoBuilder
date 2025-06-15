@@ -19,7 +19,7 @@ public class CSharpDiscovererTests
     }
 
     [Fact]
-    public void DiscovererResovesDependents()
+    public void DiscovererResolvesDependents()
     {
         var config = new Config()
         {
@@ -34,6 +34,30 @@ public class CSharpDiscovererTests
                     {
                         Name = "TestLib",
                         Path = "../../../../TestLib",
+                    }
+                ]
+        };
+
+        var resolver = new ChangeResolver(config);
+
+        List<string> input = ["../../../../TestLib/TestP/testfile.txt"];
+
+        var projects = resolver.GetChangedProjects(input);
+
+        Assert.Contains("TestApi", projects.Select(p => p.Name));
+    }
+
+    [Fact]
+    public void DiscovererGeneratesDependencies()
+    {
+        var config = new Config()
+        {
+            Projects = [
+                    new Project()
+                    {
+                        Name = "TestApi",
+                        Path = "../../../../TestApi",
+                        Dependencies = ["CSharpDiscoverer"]
                     }
                 ]
         };

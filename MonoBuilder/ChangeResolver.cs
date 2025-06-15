@@ -4,6 +4,7 @@ public class ChangeResolver
 {
     private readonly Dictionary<string, Project> config;
     private readonly Dictionary<string, IDiscoverer> discoverers;
+    private readonly string currentDir;
     private readonly Dictionary<string, List<string>> dependents = [];
 
     public ChangeResolver(Config config)
@@ -13,40 +14,65 @@ public class ChangeResolver
         {
             ["CSharpDiscoverer"] = new CSharpDiscoverer()
         };
+        currentDir = Directory.GetCurrentDirectory();
         InvertDependencies();
     }
 
     private void InvertDependencies()
     {
+        var generatedProjects = new Dictionary<string, Project>();
+
         foreach (var (project, dependencyName) in config.Values.SelectMany(p => p.Dependencies, (project, dependency) => (project, dependency)))
         {
             if (this.discoverers?.TryGetValue(dependencyName, out var discoverer) ?? false)
             {
                 var dependencies = discoverer.DiscoverDependencies(project);
 
-                InvertDiscoveredDependencies(project, dependencies);
+                InvertDiscoveredDependencies(project, dependencies, generatedProjects);
             }
             else
             {
                 TryAddDependent(project, dependencyName);
             }
         }
-    }
 
-    private void InvertDiscoveredDependencies(Project project, string[] dependencies)
-    {
-        foreach (var dependencyName in dependencies.Select(s => Path.GetFileNameWithoutExtension(s)))
+        foreach (var item in generatedProjects.Values)
         {
-            TryAddDependent(project, dependencyName);
+            config[item.Name] = item;
         }
     }
 
-    private void TryAddDependent(Project project, string dependencyName)
+    private void InvertDiscoveredDependencies(Project project, string[] dependencies, Dictionary<string, Project> newProjects)
+    {
+        foreach (var dependencyName in dependencies)
+        {
+            var expectedDependencyProjectName = Path.GetFileNameWithoutExtension(dependencyName);
+
+            if (!TryAddDependent(project, expectedDependencyProjectName))
+            {
+                if (!newProjects.ContainsKey(dependencyName))
+                {
+                    newProjects[dependencyName] = new Project
+                    {
+                        Name = expectedDependencyProjectName,
+                        Path = Path.GetRelativePath(currentDir, Path.GetDirectoryName(dependencyName)!)
+                    };
+                }
+
+                dependents.AddToList(expectedDependencyProjectName, project.Name);
+            }
+        }
+    }
+
+    private bool TryAddDependent(Project project, string dependencyName)
     {
         if (this.config.ContainsKey(dependencyName))
         {
             dependents.AddToList(dependencyName, project.Name);
+            return true;
         }
+
+        return false;
     }
 
     public IReadOnlySet<Project> GetChangedProjects(IEnumerable<string> changes)
