@@ -54,6 +54,8 @@ This application is setup to compile to an all in one AOT exe for portability bu
 In complex projects it can be annoying to add all the applications and libraries to config.json. The application supports `Discoverers` to dynamically find dependencies and map them. The only one implemented in the repo now
 is a C# one because its what the tool is built in so its easy to test. As part of porting the system into your monorepo you can add what you need.
 
+Discoverers will generate virtual projects on the fly for dependencies and add them to the config so you only need to define the top level entry points that needs build scripts.
+
 ### Example
 
 The following config is taken from the root of this repo to demo how the c sharp discoverer works by looking in the csproj files to find dependencies
