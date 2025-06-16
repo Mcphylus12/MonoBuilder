@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "Projects": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string",
+              "description": "Name of the project, This is used for manual mapping of dependencies"
+            },
+            "Path": {
+              "type": "string",
+              "description": "path to a folder containing all source for the project. This should be a relative path from the root of the repo which where the tool will be run from"
+            },
+            "Dependencies": {
+              "type": "array",
+              "description": "Names of other projects in the config or one of the supported Discoverers EG CSharpDiscoverer",
+              "items": [
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "Exec": {
+              "description": "Output to write to standard out if this project needs building",
+              "type": "string"
+            }
+          },
+          "required": [
+            "Name",
+            "Path"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "Projects"
+  ]
+}
