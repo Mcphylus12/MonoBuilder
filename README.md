@@ -9,7 +9,7 @@ Monobuilder is cli tool that improves the process of working out what to build b
 > config.schema.json contains the schema for the config file with some documentation for each field
 
 ## TODOS
-- Discovery will struggle id the project file has the same name every time like package.json in JS projects.
+- Discovery will struggle if the project file has the same name every time like package.json in JS projects.
 
 ## Example
 
